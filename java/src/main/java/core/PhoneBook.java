@@ -1,4 +1,4 @@
-package fast;
+package core;
 
 import java.util.List;
 
@@ -18,4 +18,5 @@ public class PhoneBook {
                 .map(Contact::getName)
                 .orElse(null);
     }
+
 }

@@ -1,4 +1,4 @@
-package fast;
+package core;
 
 import java.util.Objects;
 

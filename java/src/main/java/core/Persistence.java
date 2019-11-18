@@ -1,4 +1,4 @@
-package fast;
+package core;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,4 +20,5 @@ public class Persistence {
             return Collections.emptyList();
         }
     }
+
 }
