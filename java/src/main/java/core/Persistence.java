@@ -1,5 +1,7 @@
 package core;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,14 +12,32 @@ import java.util.List;
 
 public class Persistence {
 
-    List<String> retrieveFromPersistence() {
+    private static final String SRC_MAIN_RESOURCES_CORE = "./src/main/resources/core/";
+
+    public List<String> retrieveFromPersistence(String fileName) {
         try {
-            Thread.sleep(10000);
-            URI uri = getClass().getResource("my-contacts.csv").toURI();
+            URI uri = getClass().getResource(fileName).toURI();
             return Files.readAllLines(Path.of(uri));
-        } catch (IOException | URISyntaxException | InterruptedException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
             return Collections.emptyList();
+        }
+    }
+
+    void storeToPersistence(List<Contact> contacts, String fileName) {
+        try (FileWriter csvWriter  = new FileWriter(new File(SRC_MAIN_RESOURCES_CORE + fileName))) {
+            contacts.forEach(contact -> {
+                try {
+                    csvWriter.append(String.join(";",
+                            contact.getPhoneNumber(), contact.getName()));
+                    csvWriter.append("\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            csvWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
