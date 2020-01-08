@@ -58,7 +58,7 @@ describe('PhoneBookTest', function() {
             let matchingContacts : Array<Contact> = phoneBook.findAllContact("Ja");
 
             // Assert
-            matchingContacts.size().should.equal(266434);
+            matchingContacts.length.should.equal(266434);
         }),
 
         it('should_add_new_contact', function() {
@@ -69,12 +69,12 @@ describe('PhoneBookTest', function() {
             // Act
             let contactWasAdded  : boolean = phoneBook.addContact(newContact);
             if (contactWasAdded) {
-                storeContacts(phoneBook.getContacts());
+                storeContacts(phoneBook.getContacts);
             }
 
             // Assert
             contactWasAdded.should.equal(true);
-         }),
+         })
          
     })
     function retrieveContacts(): Array<Contact>  {

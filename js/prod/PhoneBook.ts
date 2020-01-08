@@ -3,7 +3,7 @@ import Contact from "./Contact";
 export default class PhoneBook {
 
     public get getContacts() :Array<Contact> {
-        return contacts;
+        return this.contacts;
     }
 
     public constructor(private contacts: Array<Contact>) {
@@ -11,30 +11,28 @@ export default class PhoneBook {
 
     public reverseLookup( phoneNumber:string):string {
         return this.contacts
-                .filter(contact => phoneNumber.equals(contact.getPhoneNumber()))
-                .findFirst()
-                .map(Contact.getName)
-                .orElse(null);
+                .filter(contact => phoneNumber == contact.getPhoneNumber)
+                .map(contact => contact.getName)
+                .shift();
     }
 
     public lookup(name : string) :string {
-        return this.contacts.filter(contact => name.equalsIgnoreCase(contact.getName()))
-                .findFirst()
-                .map(Contact.getPhoneNumber)
-                .orElse(null);
+        return this.contacts.filter(contact => name == contact.getName)
+                .map(contact => contact.getPhoneNumber)
+                .shift();
     }
 
-    public findAllContact ( searchParameter: String): Array<Contact> {
-        if (searchParameter.isBlank()) {
+    public findAllContact (searchParameter: string): Array<Contact> {
+        if (searchParameter == "") {
             return this.contacts;
         }
         return this.contacts
-                .filter(contact => contact.getName().contains(searchParameter) ||
-                        contact.getPhoneNumber().contains(searchParameter));
+                .filter(contact => contact.getName.includes(searchParameter) ||
+                        contact.getPhoneNumber.includes(searchParameter));
     }
 
     public addContact( newContact:Contact) : boolean{
-        if (this.contacts.contains(newContact)) {
+        if (this.contacts.includes(newContact)) {
             return false;
         }
         this.contacts.push(newContact);
@@ -42,10 +40,10 @@ export default class PhoneBook {
     }
 
     public removeContact( contactToRemove: Contact) :boolean {
-        if (this.contacts.find(contactToRemove)) {
+        if (this.contacts.includes(contactToRemove)) {
             return false;
         }
-        this.contacts.remove(contactToRemove);
+        this.contacts.filter(x => x != contactToRemove);
         return true;
     }
 
